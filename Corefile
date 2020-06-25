@@ -1,11 +1,14 @@
 dalongrong.com:53 {
     log
-    health
-    rewrite stop {
-        name regex (.*)\.(\d+.\d+.\d+.\d+)\.dalongrong\.com {1}.service.dc1.consul
-        answer name (.*)\.service\.(dc1)\.consul {1}-{2}.dalongrong.com
+    template IN A dalongrong.com {
+      match ^(?P<a>\w+)\.(?P<b>\d+\.\d+\.\d+\.\d+)\.dalongrong\.com\.$
+      answer "{{ .Name }} 60 IN A {{ .Group.b }}"
+      authority  "dalongrong.com. 60 IN NS ns0.dalongrong.com."
+      authority  "dalongrong.com. 60 IN NS ns1.dalongrong.com."
+      additional "ns0.dalongrong.com. 60 IN A 203.0.113.8"
+      additional "ns1.dalongrong.com. 60 IN A 198.51.100.8"
+      fallthrough
     }
-    forward  . 192.168.1.3:8600
 }
  
 .:53 {
