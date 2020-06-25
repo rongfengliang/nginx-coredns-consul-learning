@@ -1,0 +1,34 @@
+version: "3"
+services: 
+  lb: 
+    image: openresty/openresty:alpine
+    networks:
+     service1_net:
+      ipv4_address: 192.168.1.2
+    volumes:
+    - "./nginx-lb.conf:/usr/local/openresty/nginx/conf/nginx.conf"
+    - "./dns.log:/var/log/nginx/dns.log"
+    ports:
+    - "53:53/udp"
+    - "53:53/tcp"
+  consul:
+    image: consul
+    networks:
+     service1_net:
+      ipv4_address: 192.168.1.3
+    ports:
+    - "8500:8500"
+  coredns:
+    image: coredns/coredns:1.7.0
+    networks:
+     service1_net:
+      ipv4_address: 192.168.1.4
+    volumes: 
+    - "./Corefile:/opt/Corefile"
+    command: -conf /opt/Corefile
+networks:
+  service1_net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.1.0/16
