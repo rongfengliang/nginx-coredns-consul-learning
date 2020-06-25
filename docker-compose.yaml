@@ -21,6 +21,8 @@ services:
     - "8500:8500"
   coredns:
     image: coredns/coredns:1.7.0
+    ports:
+    - "9254:9254"
     networks:
      service1_net:
       ipv4_address: 192.168.1.4

@@ -1,7 +1,8 @@
 dalongrong.com:53 {
     log
+    prometheus 0.0.0.0:9254
     template IN A dalongrong.com {
-      match ^(?P<a>\w+)\.(?P<b>\d+\.\d+\.\d+\.\d+)\.dalongrong\.com\.$
+      match (\D*?)\.?(?P<b>\d+\.\d+\.\d+\.\d+)\.dalongrong\.com\.$
       answer "{{ .Name }} 60 IN A {{ .Group.b }}"
       authority  "dalongrong.com. 60 IN NS ns0.dalongrong.com."
       authority  "dalongrong.com. 60 IN NS ns1.dalongrong.com."
