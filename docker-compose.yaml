@@ -10,6 +10,7 @@ services:
     - "./dns.log:/var/log/nginx/dns.log"
     ports:
     - "53:53/udp"
+    - "80:80"
     - "53:53/tcp"
   consul:
     image: consul
