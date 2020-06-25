@@ -2,7 +2,7 @@ dalongrong.com:53 {
     log
     health
     rewrite stop {
-        name regex (.*)-(dc1)\.dalongrong\.com {1}.service.{2}.consul
+        name regex (.*)\.(\d+.\d+.\d+.\d+)\.dalongrong\.com {1}.service.dc1.consul
         answer name (.*)\.service\.(dc1)\.consul {1}-{2}.dalongrong.com
     }
     forward  . 192.168.1.3:8600
